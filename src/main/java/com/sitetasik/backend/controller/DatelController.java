@@ -52,4 +52,10 @@ public class DatelController {
         List<Datel> list = datelRepository.getAll();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Map> delete(@PathVariable(value = "id") UUID id) {
+        Map map = datelService.delete(id);
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
+    }
 }

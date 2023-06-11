@@ -7,8 +7,10 @@ import com.sitetasik.backend.utils.TemplateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class DatelImpl implements DatelService {
@@ -50,5 +52,24 @@ public class DatelImpl implements DatelService {
     @Override
     public List<Datel> getAll() {
         return datelRepository.getAll();
+    }
+
+    @Override
+    public Map delete(UUID datel) {
+        try {
+            if (templateResponse.checkNull(datel)) {
+                return templateResponse.templateError("Tolong pilih datel yang akan dihapus !!");
+            }
+            Datel checkIdDatel = datelRepository.getById(datel);
+            if (templateResponse.checkNull(checkIdDatel)) {
+                return templateResponse.templateError("Datel tidak ditemukan");
+            }
+            checkIdDatel.setDeleted_at(new Date());
+            datelRepository.save(checkIdDatel);
+
+            return templateResponse.templateSuccess("Berhasil Menghapus Datel");
+        } catch (Exception e) {
+            return templateResponse.templateError(e);
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface DatelRepository extends PagingAndSortingRepository<Datel, Long>, CrudRepository<Datel, Long> {
+public interface DatelRepository extends PagingAndSortingRepository<Datel, UUID>, CrudRepository<Datel, UUID> {
     @Query("SELECT c from Datel c WHERE c.id = :id")
     Datel getById(@Param("id") UUID id);
 
